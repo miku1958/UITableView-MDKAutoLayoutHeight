@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-  A high performance, low invasive height calculation and Cache Tool for UITableview 
+  A high  performance,  low invasive height calculation and Cache Tool for UITableview 
                    DESC
 
   s.homepage     = "https://github.com/miku1958/UITableView-MDKAutoLayoutHeight"
@@ -95,14 +95,14 @@ Pod::Spec.new do |s|
 
   s.default_subspec = 'Core'
 
-  s.subspec 'Core' do |Core|
+  s.subspec 'Core' do |core|
     core.source_files = "Class/core/*.{h,m}"
   end
 
-  s.subspec 'DiskCache' do |DiskCache|
-    DiskCache.source_files = "Class/diskCache/*.{h,m}"
-    DiskCache.dependency 'UITableView-MDKAutoLayoutHeight'
-    DiskCache.dependency 'YYCache'
+  s.subspec 'DiskCache' do |diskCache|
+    diskCache.source_files = "Class/diskCache/*.{h,m}"
+    diskCache.dependency 'UITableView-MDKAutoLayoutHeight/Core'
+    diskCache.dependency 'YYCache'
    end
 
 
