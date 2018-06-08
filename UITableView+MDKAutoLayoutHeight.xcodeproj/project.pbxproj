@@ -49,7 +49,7 @@
 		FF43C44F20CA7230005B46CD /* partAutolayoutOfCellFromXib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = partAutolayoutOfCellFromXib.xib; sourceTree = "<group>"; };
 		FF43C45320CA767B005B46CD /* cellWithoutXib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cellWithoutXib.h; sourceTree = "<group>"; };
 		FF43C45420CA767B005B46CD /* cellWithoutXib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cellWithoutXib.m; sourceTree = "<group>"; };
-		FF43C45720CA78C0005B46CD /* MDKAutoLayoutHeightConstContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MDKAutoLayoutHeightConstContent.h; path = ../../../../Documents/MDKAutoLayoutHeightConstContent.h; sourceTree = "<group>"; };
+		FFF9E80820CA816000A8435B /* MDKAutoLayoutHeightConstContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDKAutoLayoutHeightConstContent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,7 +187,7 @@
 		FF43C45620CA78A1005B46CD /* constContent */ = {
 			isa = PBXGroup;
 			children = (
-				FF43C45720CA78C0005B46CD /* MDKAutoLayoutHeightConstContent.h */,
+				FFF9E80820CA816000A8435B /* MDKAutoLayoutHeightConstContent.h */,
 			);
 			path = constContent;
 			sourceTree = "<group>";

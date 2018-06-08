@@ -95,11 +95,11 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |core|
-    core.source_files = "Class/core/*.{h,m}" ,"Class/constContent/*.h"
+    core.source_files = "Class/core/*.{h,m}", "Class/constContent/*.h"
   end
 
   s.subspec 'DiskCache' do |diskCache|
-    diskCache.source_files = "Class/diskCache/*.{h,m}" ,"Class/constContent/*.h"
+    diskCache.source_files = "Class/diskCache/*.{h,m}", "Class/constContent/*.h"
     diskCache.dependency 'UITableView-MDKAutoLayoutHeight/Core'
     diskCache.dependency 'YYCache'
    end
