@@ -91,16 +91,15 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.public_header_files = "Class/constContent/*.h"
 
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |core|
-    core.source_files = "Class/core/*.{h,m}"
+    core.source_files = "Class/core/*.{h,m}" ,"Class/constContent/*.h"
   end
 
   s.subspec 'DiskCache' do |diskCache|
-    diskCache.source_files = "Class/diskCache/*.{h,m}"
+    diskCache.source_files = "Class/diskCache/*.{h,m}" ,"Class/constContent/*.h"
     diskCache.dependency 'UITableView-MDKAutoLayoutHeight/Core'
     diskCache.dependency 'YYCache'
    end
