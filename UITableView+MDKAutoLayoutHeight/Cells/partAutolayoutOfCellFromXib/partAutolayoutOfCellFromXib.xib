@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="793" id="n2b-qd-gtr" customClass="partAutolayoutOfCellFromXib">
+            <rect key="frame" x="0.0" y="0.0" width="524" height="793"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n2b-qd-gtr" id="HEi-lK-5ar">
+                <rect key="frame" x="0.0" y="0.0" width="524" height="792.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5A2C0CFA07EEEB5B13F7360CF761C9FC" translatesAutoresizingMaskIntoConstraints="NO" id="OCr-fp-UrP">
+                        <rect key="frame" x="20" y="31" width="189" height="284"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuN-6b-hN3">
+                        <rect key="frame" x="475" y="31" width="29" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="To1-oD-fmL">
+                        <rect key="frame" x="418" y="81" width="86" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PXH-dY-cG0">
+                        <rect key="frame" x="20" y="342" width="484" height="74"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="W5d-37-EJv">
+                                <rect key="frame" x="231.5" y="27" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95686274510000002" green="0.60934975576272898" blue="0.67369459493322315" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="W5d-37-EJv" firstAttribute="centerY" secondItem="PXH-dY-cG0" secondAttribute="centerY" id="2eX-ui-dRt"/>
+                            <constraint firstItem="W5d-37-EJv" firstAttribute="centerX" secondItem="PXH-dY-cG0" secondAttribute="centerX" id="HF2-jo-uxL"/>
+                            <constraint firstItem="W5d-37-EJv" firstAttribute="top" secondItem="PXH-dY-cG0" secondAttribute="top" constant="27" id="Y9a-v4-F8E"/>
+                            <constraint firstAttribute="bottom" secondItem="W5d-37-EJv" secondAttribute="bottom" constant="27" id="s4V-PX-eOs"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="OCr-fp-UrP" firstAttribute="leading" secondItem="HEi-lK-5ar" secondAttribute="leadingMargin" id="Ald-LF-n8U"/>
+                    <constraint firstItem="PXH-dY-cG0" firstAttribute="top" secondItem="OCr-fp-UrP" secondAttribute="bottom" constant="27" id="HD3-Pu-fDd"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="To1-oD-fmL" secondAttribute="trailing" id="bJI-YY-Xm8"/>
+                    <constraint firstItem="OCr-fp-UrP" firstAttribute="top" secondItem="HEi-lK-5ar" secondAttribute="topMargin" id="jU1-CH-VnG"/>
+                    <constraint firstItem="PXH-dY-cG0" firstAttribute="leading" secondItem="HEi-lK-5ar" secondAttribute="leadingMargin" id="kIM-DX-hQJ"/>
+                    <constraint firstItem="To1-oD-fmL" firstAttribute="top" secondItem="iuN-6b-hN3" secondAttribute="bottom" constant="29" id="lNh-41-4z0"/>
+                    <constraint firstItem="PXH-dY-cG0" firstAttribute="trailing" secondItem="HEi-lK-5ar" secondAttribute="trailingMargin" id="o3O-E7-AuM"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="iuN-6b-hN3" secondAttribute="trailing" id="pUI-EC-yus"/>
+                    <constraint firstItem="iuN-6b-hN3" firstAttribute="top" secondItem="HEi-lK-5ar" secondAttribute="topMargin" id="uNd-4S-9ny"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bottomView" destination="PXH-dY-cG0" id="eHW-Ac-Ojm"/>
+            </connections>
+            <point key="canvasLocation" x="144" y="270.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="5A2C0CFA07EEEB5B13F7360CF761C9FC" width="189" height="284"/>
+    </resources>
+</document>

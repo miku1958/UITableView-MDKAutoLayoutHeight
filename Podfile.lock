@@ -1,0 +1,16 @@
+PODS:
+  - YYCache (1.0.4)
+
+DEPENDENCIES:
+  - YYCache
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - YYCache
+
+SPEC CHECKSUMS:
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+
+PODFILE CHECKSUM: 597faa261d0288ca6464b0954ed38cd5af82af5c
+
+COCOAPODS: 1.5.0
