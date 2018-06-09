@@ -97,6 +97,11 @@ if you dequeue cell like this:
 it will crash because of I get the cell by using this ,and ==-dequeueReusableCellWithIdentifier:forIndexPath:== will call ==table.delegate -heightForRowAtIndexPath== so it will into an endless loop and crash , the solution is use the ==table -dequeueReusableCellWithIdentifier:== I counld find a reason why I need to use this method ,if you have to use this method to dequeue cell,please hit me a issue and tell me the reason ,and I try to find a way to avoid it
 
 
+# statement
+some code I use to determine the contentView's width is come from UITableView-FDTemplateLayoutCell:
+
+https://github.com/forkingdog/UITableView-FDTemplateLayoutCell
+
 
 # 中文文档
 
@@ -193,3 +198,9 @@ it will crash because of I get the cell by using this ,and ==-dequeueReusableCel
 app就会crash,因为我是通过这个datasource方法获取cell的,而==-dequeueReusableCellWithIdentifier:forIndexPath:== 这个方法会调用==table.delegate -heightForRowAtIndexPath== 所以就会陷入无限循环......解决办法是不用这个方法,改成==-dequeueReusableCellWithIdentifier:==
 
 我实在没有想到一定要用这个方法的理由,如果有遇到什么情况是一定要用这个dequeue cell的话,请提issue告诉我一下谢谢
+
+# 声明
+
+部分用来确定contentView的代码来自UITableView-FDTemplateLayoutCell:
+
+https://github.com/forkingdog/UITableView-FDTemplateLayoutCell
