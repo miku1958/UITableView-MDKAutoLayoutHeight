@@ -100,7 +100,6 @@ it will crash because of I get the cell by using this ,and ==-dequeueReusableCel
 # statement
 some code I use to determine the contentView's width is come from UITableView-FDTemplateLayoutCell:
 
-https://github.com/forkingdog/UITableView-FDTemplateLayoutCell
 
 
 # 中文文档
@@ -203,4 +202,3 @@ app就会crash,因为我是通过这个datasource方法获取cell的,而==-deque
 
 部分用来确定contentView的代码来自UITableView-FDTemplateLayoutCell:
 
-https://github.com/forkingdog/UITableView-FDTemplateLayoutCell
