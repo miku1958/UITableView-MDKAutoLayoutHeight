@@ -19,7 +19,8 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 
 
 @implementation MDKAutoLayoutHeight
-+(void)load{//ensure these object had initialize, so I put them in load but not initialize
++(void)load{//ensure these object had initialize, so I put them in +load but not +initialize
+	if (MDKAutoLayoutHeight_cellHeightCacheDic) { return; }
 	MDKAutoLayoutHeight_cellHeightCacheDic = @{}.mutableCopy;
 	MDKAutoLayoutHeight_decisionViewsDic = @{}.mutableCopy;
 	MDKAutoLayoutHeightMemoryWarningLock = [[NSLock alloc]init];
@@ -38,6 +39,9 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 
 +(void)registerHeight:(Class)cellClass _decisionView:(NSString *)decisionView{
 	if ([decisionView isEqualToString:@"contentView"]) { return; }
+	if (!MDKAutoLayoutHeight_decisionViewsDic) {
+		[self load];
+	}
 	MDKAutoLayoutHeight_decisionViewsDic[NSStringFromClass(cellClass)] = decisionView;
 }
 
@@ -70,11 +74,13 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		}else if (![_reusableTableCells[cell.reuseIdentifier] containsObject:cell]) {
 			[_reusableTableCells[cell.reuseIdentifier] addObject:cell];
 		}
+
+		[_table layoutIfNeeded];
+
 		if ([cell.class isEqual:UITableViewCell.class]) {
 			return [cell sizeThatFits:CGSizeMake(_table.frame.size.width, MAXFLOAT)].height;
 		}
 
-		[_table layoutIfNeeded];
 		if ([cell respondsToSelector:@selector(MDKModelHash)]) {
 			cacheKey = [NSString stringWithFormat:@"%@-%@-%@",cellClass,@(_table.frame.size.width),cell.MDKModelHash];
 			if (!_cellHeightCacheDic[cellClass]) {//try to get cache from RAM
