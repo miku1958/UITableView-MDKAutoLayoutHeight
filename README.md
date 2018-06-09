@@ -200,5 +200,5 @@ app就会crash,因为我是通过这个datasource方法获取cell的,而==-deque
 
 # 声明
 
-部分用来确定contentView的代码来自UITableView-FDTemplateLayoutCell
+部分用来确定contentView宽度的代码来自UITableView-FDTemplateLayoutCell
 
