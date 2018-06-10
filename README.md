@@ -56,7 +56,7 @@ If you need to handle the result height,you can use this
 
 ---
 
-#### If your cell does‘nt have fully constraint in cententView, you can use `MDKAutoLayoutRegisterHeight` to tell me which view is in the bottom,like this:
+#### If your cell does‘nt have fully constraint in cententView(which is not a self-satisfie cell), you can use `MDKAutoLayoutRegisterHeight` to tell me which view is in the bottom,like this:
 
 	#import "UITableView+MDKAutoLayoutHeight.h"
 	
