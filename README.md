@@ -31,7 +31,9 @@ Features
 - **轻量级**: 这个库的核心组件只有一个文件，一个类和一个tableview分类.
 - **容易使用**: 只需要一行代码就能享受完全自动化的高度计算.
 
-中文文档请看下方
+
+[中文文档](https://github.com/miku1958/UITableView-MDKAutoLayoutHeight/blob/master/README.md#中文文档) 
+
 
 ## Usage
 	
