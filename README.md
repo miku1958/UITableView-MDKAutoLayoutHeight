@@ -145,12 +145,12 @@ Some code I use to determine the contentView's width is come from UITableView-FD
 		return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath];
 	}
 
-### 没了,就这样,不用设置cell,不用提供额外的 Identifier,你甚至不用改变任何的代码结构（除非你需要对contentView做什么处理导致不能直接拿高度来用）,超级简单对吧
+### 没了,就这样,超级简单对吧
 
 
 #
 
-如果你需要在计算完高度后,对高度做什么事情(比如加个间距啊),你可以用这个方法重新计算行高
+如果需要对高度做什么事情(比如加个间距啊)，可以用这个方法重新计算行高
 
 	-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 		return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath handle:^CGFloat(__kindof UITableViewCell *cell, CGFloat height) {
@@ -174,9 +174,9 @@ Some code I use to determine the contentView's width is come from UITableView-FD
 	}
 	@end
 
-并且如果你实现了这个方法,那这套工具也能适用于用frame布局的cell,只要你是在layoutSubview中布局的(其他方式如放在sizeThatFit之类的应该也能用吧..大概),如果你遇到哪些地方用frame设置cell的控件位置后无效的,请告诉我
+并且如果实现了这个方法,那这套工具也能适用于用frame布局的cell,只要你是在layoutSubview中布局的(其他方式如放在sizeThatFit之类的应该也能用吧..大概),如果你遇到哪些地方用frame设置cell的控件位置后无效的,请告诉我
 
-> 顺便一提,MDKAutoLayoutRegisterHeight() 是用C语言的宏实现的,如果你是用swift的话名,需要用MDKAutoLayoutHeight.(registerHeight:_decisionView:) 手动填入最底部的view对应的属性名
+> 顺便一提,MDKAutoLayoutRegisterHeight() 是用C语言的宏实现的,如果你是用swift的话,需要用MDKAutoLayoutHeight.(registerHeight:_decisionView:) 手动填入最底部的view对应的属性名
 
 #
 
@@ -214,7 +214,7 @@ Some code I use to determine the contentView's width is come from UITableView-FD
     - (void)removeCacheFor:(Class)cell;
     - (void)removeAllCache;
     
-## 已知问题
+# 已知问题
 
 如果你dequeue cell的时候是这样的:
 
