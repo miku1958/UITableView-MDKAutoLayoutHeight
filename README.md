@@ -1,9 +1,9 @@
 # UITableView-MDKAutoLayoutHeight
 A high performance, low invasive height calculation and Cache Tool for UITableview
 
-If you like it ,please give me a star;if you don't ,please  tell me why
+If you like it ,please give me a star
 
-如果你喜欢这个工具,请点一下星星支持,如果你不喜欢的话,请给我一个isuue告诉我为什么
+如果你喜欢这个工具,请点一下星星支持
 
 
 ## What is this ?
