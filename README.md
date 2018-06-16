@@ -32,7 +32,7 @@ Features
 - **容易使用**: 只需要一行代码就能享受完全自动化的高度计算.
 
 
-中文文档:[简书](https://www.jianshu.com/p/d1af093d3bda) 
+中文文档:[简书](https://www.jianshu.com/p/d1af093d3bda) [掘金](https://juejin.im/post/5b1c9a0d6fb9a01e8b782357) 
 
 
 ## Usage
