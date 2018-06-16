@@ -32,7 +32,7 @@ Features
 - **容易使用**: 只需要一行代码就能享受完全自动化的高度计算.
 
 
-[中文文档](https://github.com/miku1958/UITableView-MDKAutoLayoutHeight/blob/master/README.md#中文文档) 
+中文文档:[简书](https://www.jianshu.com/p/d1af093d3bda) 
 
 
 ## Usage
@@ -126,110 +126,4 @@ It will crash because of I get the cell by using this datasource method,and `-de
 
 # Thanks
 Some code I use to determine the contentView's width is come from UITableView-FDTemplateLayoutCell
-
-
-
-# 中文文档
-
-# UITableView-MDKAutoLayoutHeight
-高性能,低侵入性的UITableviewCell高度计算和缓存工具
-
-
-## 这是什么 ?
-这是一个UITableview高度计算和缓存的工具,并且是全自动和基本没有入侵性的!
-
-
-## 使用方法
-
-	#import "UITableView+MDKAutoLayoutHeight.h"
-
-	-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-		return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath];
-	}
-
-### 没了,就这样,超级简单对吧
-
-
-#
-
-如果需要对高度做什么事情(比如加个间距啊)，可以用这个方法重新计算行高
-
-	-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-		return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath handle:^CGFloat(__kindof UITableViewCell *cell, CGFloat height) {
-		  return height + 20;
-		}];
-	}
-
----
-
-#### 如果你cell不是完全填充contentView的约束,你可以用`MDKAutoLayoutRegisterHeight`设置哪个view是最底部的view:
-
-	#import "UITableView+MDKAutoLayoutHeight.h"
-	
-	@interface PartOfAutolayoutCell()
-	@proterty(nonatomic,strong)UIView *bottomView;
-	@end
-	
-	@implementation PartOfAutolayoutCell
-	+(void)initialize{
-		MDKAutoLayoutRegisterHeight(self, bottomView)
-	}
-	@end
-
-并且如果实现了这个方法,那这套工具也能适用于用frame布局的cell,只要你是在layoutSubview中布局的(其他方式如放在sizeThatFit之类的应该也能用吧..大概),如果你遇到哪些地方用frame设置cell的控件位置后无效的,请告诉我
-
-> 顺便一提,MDKAutoLayoutRegisterHeight() 是用C语言的宏实现的,如果你是用swift的话,需要用MDKAutoLayoutHeight.(registerHeight:_decisionView:) 手动填入最底部的view对应的属性名
-
-#
-
-## 在内存中缓存高度
-
-如果你需要缓存cell的高度到内存,只需要在cell中引入 `<MDKTableviewCellCacheHeightDelegate>` ,实现 `-MDKModelHash` 方法,返回一个具有唯一性的字符串给我就行,比如:
-
-	-(NSString *)MDKModelHash{
-		return @(_model.ID).description;
-	}
-
-如果是可能改变cell内容的话,可以把ID和决定cell内容是否有变化的标志符传给我,比如:
-
-	-(NSString *)MDKModelHash{
-		return [NSString stringWithFormat:@"%@%@",@(_model.ID),@(_model.isDelete)];
-	}
-
-
-等等等等.....
-
-
-## 安装
-
-    pod 'UITableView-MDKAutoLayoutHeight'
-    
-### 如果需要把高度缓存到磁盘的话
-
-    pod 'UITableView-MDKAutoLayoutHeight/diskCache'
-
-当tableview dealloc的时候就会把内存中的缓存写入磁盘
-我提供了下面这些方法用来管理磁盘的缓存
-
-	import UITableView+MDKAutoLayoutHeightDiskCache.h
-    - (void)updateDiskCache;//用于某些会一直活着的tableview
-    - (void)removeCacheFor:(Class)cell;
-    - (void)removeAllCache;
-    
-# 已知问题
-
-如果你dequeue cell的时候是这样的:
-
-	- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
-		return [tableView dequeueReusableCellWithIdentifier:@"Identifier" forIndexPath:indexPath];	
-	}
-
-app就会crash,因为我是通过这个datasource方法获取cell的,而`-dequeueReusableCellWithIdentifier:forIndexPath:` 这个方法会调用 `table.delegate -heightForRowAtIndexPath` 所以就会陷入无限循环......解决办法是不用这个方法,改成`-dequeueReusableCellWithIdentifier:`qeueu cell
-
-我实在没有想到一定要用这个方法的理由,如果有遇到什么情况是一定要用这个dequeue cell的话,请告诉我原因谢谢，我试试看有没有办法避开这个问题
-
-# 感谢
-
-部分用来确定contentView宽度的代码来自UITableView-FDTemplateLayoutCell
 
