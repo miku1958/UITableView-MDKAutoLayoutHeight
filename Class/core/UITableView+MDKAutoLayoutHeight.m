@@ -26,7 +26,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	MDKAutoLayoutHeightMemoryWarningLock = [[NSLock alloc]init];
 }
 + (void)initialize{
-	
+
 }
 - (instancetype)init{
 	self = [super init];
@@ -67,15 +67,23 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	NSString *cacheKey;
 
 	if (cell) {
-
+		NSAssert(cell.reuseIdentifier, @"please use UITableViewCell reuse function");
 		NSMutableDictionary<NSString *,NSMutableArray *> *_reusableTableCells = [_table valueForKey:@"_reusableTableCells"];
 		if (!_reusableTableCells[cell.reuseIdentifier]) {
 			_reusableTableCells[cell.reuseIdentifier] = @[cell].mutableCopy;
 		}else if (![_reusableTableCells[cell.reuseIdentifier] containsObject:cell]) {
 			[_reusableTableCells[cell.reuseIdentifier] addObject:cell];
 		}
+		[UIView performWithoutAnimation:^{// remove Implicit animation after iOS 11
+			[CATransaction begin];
+			[CATransaction setDisableActions:YES];
 
-		[_table layoutIfNeeded];
+			[_table layoutIfNeeded];
+
+			[CATransaction commit];
+
+		}];
+
 
 		if ([cell.class isEqual:UITableViewCell.class]) {
 			return [cell sizeThatFits:CGSizeMake(_table.frame.size.width, MAXFLOAT)].height;
@@ -86,7 +94,9 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 			if (!_cellHeightCacheDic[cellClass]) {//try to get cache from RAM
 				_cellHeightCacheDic[cellClass] = MDKAutoLayoutHeight_cellHeightCacheDic[cellClass];
 				if (!_cellHeightCacheDic[cellClass]) {//try to get cache from Disk
-					_cellHeightCacheDic[cellClass] = (id)[self getHeightCacheForKey:cellClass];
+					if ([self respondsToSelector:@selector(getHeightCacheForKey)]) {
+						_cellHeightCacheDic[cellClass] = (id)[self getHeightCacheForKey:cellClass];
+					}
 				}
 			}
 			NSNumber *height = _cellHeightCacheDic[cellClass][cacheKey];
@@ -131,7 +141,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 				rightSystemViewsWidth += systemAccessoryWidths[cell.accessoryType];
 			}
 
-			if ([UIScreen mainScreen].scale >= 3 && [UIScreen mainScreen].bounds.size.width >= 414) {
+			if (rightSystemViewsWidth > 0 && [UIScreen mainScreen].scale >= 3 && [UIScreen mainScreen].bounds.size.width >= 414) {
 				rightSystemViewsWidth += 4;
 			}
 
@@ -173,7 +183,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		}
 		_cellHeightCacheDic[cellClass][cacheKey] = @(height);
 	}
-	
+
 	if (cellContetntWidthCons) {
 		[cell.contentView removeConstraints:cellContetntWidthCons];
 	}
@@ -219,7 +229,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		if (!autoHeight) {
 			autoHeight = [MDKAutoLayoutHeight new];
 			autoHeight.table = self;
-			
+
 			NSString *objectName = @"autoLayoutHeight";
 			[self willChangeValueForKey:objectName];
 

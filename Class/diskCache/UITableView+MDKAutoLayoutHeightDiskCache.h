@@ -7,10 +7,4 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UITableView+MDKAutoLayoutHeight.h"
 
-@interface MDKAutoLayoutHeight(cacheMethod)
-- (void)updateDiskCache;
-- (void)removeCacheFor:(Class)cell;
-- (void)removeAllCache;
-@end

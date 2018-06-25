@@ -7,6 +7,7 @@
 //
 
 #import "UITableView+MDKAutoLayoutHeightDiskCache.h"
+#import "UITableView+MDKAutoLayoutHeight.h"
 #import "MDKAutoLayoutHeightConstContent.h"
 #import <YYCache/YYCache.h>
 

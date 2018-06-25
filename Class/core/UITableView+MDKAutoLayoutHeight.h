@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @protocol MDKTableviewCellCacheHeightDelegate
 @property (nonatomic,readonly)NSString *MDKModelHash;
 @end
@@ -28,3 +27,11 @@
 @interface UITableView (_MDKAutoLayoutHeight)
 @property (nonatomic,readonly)MDKAutoLayoutHeight *autoLayoutHeight;
 @end
+
+#if __has_include("UITableView+MDKAutoLayoutHeightDiskCache.h")
+@interface MDKAutoLayoutHeight(cacheMethod)
+- (void)updateDiskCache;
+- (void)removeCacheFor:(Class)cell;
+- (void)removeAllCache;
+@end
+#endif
