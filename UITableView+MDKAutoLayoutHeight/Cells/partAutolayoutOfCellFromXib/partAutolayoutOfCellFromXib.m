@@ -7,7 +7,7 @@
 //
 
 #import "partAutolayoutOfCellFromXib.h"
-#import "UITableView+MDKAutoLayoutHeightDiskCache.h"
+#import "UITableView+MDKAutoLayoutHeight.h"
 @interface partAutolayoutOfCellFromXib()<MDKTableviewCellCacheHeightDelegate>
 
 @end

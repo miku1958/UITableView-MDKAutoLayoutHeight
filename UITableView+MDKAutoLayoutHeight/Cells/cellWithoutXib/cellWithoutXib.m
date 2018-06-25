@@ -7,7 +7,7 @@
 //
 
 #import "cellWithoutXib.h"
-#import "UITableView+MDKAutoLayoutHeightDiskCache.h"
+#import "UITableView+MDKAutoLayoutHeight.h"
 @interface cellWithoutXib()<MDKTableviewCellCacheHeightDelegate>
 @property (nonatomic,strong)UIImageView *headerImgview;
 @property (nonatomic,strong)UILabel *headerTitleLabel;

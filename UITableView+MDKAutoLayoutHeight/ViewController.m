@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "UITableView+MDKAutoLayoutHeightDiskCache.h"
+#import "UITableView+MDKAutoLayoutHeight.h"
 
 #import "partAutolayoutOfCellFromXib.h"
 #import "cellWithoutXib.h"

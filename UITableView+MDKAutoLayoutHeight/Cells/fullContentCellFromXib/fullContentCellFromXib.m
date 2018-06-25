@@ -7,7 +7,7 @@
 //
 
 #import "fullContentCellFromXib.h"
-#import "UITableView+MDKAutoLayoutHeightDiskCache.h"
+#import "UITableView+MDKAutoLayoutHeight.h"
 @interface fullContentCellFromXib()<MDKTableviewCellCacheHeightDelegate>
 
 @end
