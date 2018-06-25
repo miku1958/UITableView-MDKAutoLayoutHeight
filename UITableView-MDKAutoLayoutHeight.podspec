@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "UITableView-MDKAutoLayoutHeight"
-  s.version      = "1.0"
+  s.version      = "1.1"
   s.summary      = "A high performance, low invasive height calculation and Cache Tool for UITableview"
 
   # This description is used to generate tags and improve search results.
