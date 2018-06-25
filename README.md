@@ -109,7 +109,8 @@ And so on.....
 The cache will write to disk when tableview is dealloc  
 I provide these method to manage disk's cache
 
-    ~import UITableView+MDKAutoLayoutHeightDiskCache.h~ for easy to change ,It is no need to change header File now
+~import UITableView+MDKAutoLayoutHeightDiskCache.h~ for easy to change ,It is no need to change header File now
+    
     - (void)updateDiskCache;//use to those tableview that is always alive
     - (void)removeCacheFor:(Class)cell;
     - (void)removeAllCache;
