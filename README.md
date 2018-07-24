@@ -124,7 +124,7 @@ If you dequeue cell like this:
 		return [tableView dequeueReusableCellWithIdentifier:@"Identifier" forIndexPath:indexPath];	
 	}
 
-It will crash because of I get the cell by using this datasource method,and `-dequeueReusableCellWithIdentifier:forIndexPath:` will call `table.delegate -heightForRowAtIndexPath` so it will get into an endless loop then crash , the solution is use the `table -dequeueReusableCellWithIdentifier:` rather than the forIndexPath one.  I counld find a reason why I need to use this method ,if you have to use this method to dequeue cell,please tell me the reason ,and I try to find a way to avoid it
+It will crash because of I get the cell by using this datasource method,and `-dequeueReusableCellWithIdentifier:forIndexPath:` will call `table.delegate -heightForRowAtIndexPath` so it will get into an endless loop then crash , the solution is use the `table -dequeueReusableCellWithIdentifier:` rather than the forIndexPath one.  I counldn‘t find a reason why I need to use this method ,if you have to use this method to dequeue cell,please tell me the reason ,and I try to find a way to avoid it
 
 
 # Thanks
