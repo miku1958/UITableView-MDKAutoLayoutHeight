@@ -74,7 +74,7 @@ If you need to handle the result height,you can use this
 
 If you implement this, it also apply to those cell that use frame to config cell's layout in layoutSubview,or in other ~~magical~~ method ~~(I am not not 100% confident)~~ , if you find that you set frame in some place that this tool doesn't work ,please tell me where
 
-> MDKAutoLayoutRegisterHeight() is base on C language Macro,if you using swift ,you may use MDKAutoLayoutHeight.(registerHeight:_decisionView:) to fill the property name of the View in bottom manually
+> MDKAutoLayoutRegisterHeight() is base on C language Macro,if you using swift ,you may use MDKAutoLayoutHeight.(registerHeight:_decisionView:#keyPath(view.bottom)) to fill the property name of the View 
 
 #
 
