@@ -169,11 +169,16 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	if (height<1) {
 		height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + cell.contentView.frame.origin.y;
 	}
+	if (height<1) {
+		height = [cell intrinsicContentSize].height;
+	}
 
 	if (_table.separatorStyle != UITableViewCellSeparatorStyleNone) {
 		height += 1.0 / UIScreen.mainScreen.scale;
 	}
-
+	if (height<1) {
+		
+	}
 	if (handleHeightBlock) {
 		height = handleHeightBlock(cell,height);
 	}
