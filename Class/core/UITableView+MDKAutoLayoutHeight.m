@@ -46,10 +46,10 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 }
 
 -(CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	return [self heightForRowAtIndexPath:indexPath handle:nil];
+	return [self heightForRowAtIndexPath:indexPath cacheKey:nil handle:nil];
 }
 
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath  handle:(CGFloat (^)(__kindof UITableViewCell *cell,CGFloat height))handleHeightBlock{
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)_cacheKey  handle:(CGFloat (^)(__kindof UITableViewCell *cell,CGFloat height))handleHeightBlock{
 	UITableViewCell<MDKTableviewCellCacheHeightDelegate> *cell = (id)[_table.dataSource tableView:_table cellForRowAtIndexPath:indexPath];
 
 	NSString *cellClass = NSStringFromClass(cell.class);
@@ -88,9 +88,15 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		if ([cell.class isEqual:UITableViewCell.class]) {
 			return [cell sizeThatFits:CGSizeMake(_table.frame.size.width, MAXFLOAT)].height;
 		}
-
-		if ([cell respondsToSelector:@selector(MDKModelHash)]) {
-			cacheKey = [NSString stringWithFormat:@"%@-%@-%@",cellClass,@(_table.frame.size.width),cell.MDKModelHash];
+		if (_cacheKey.length) {
+			cacheKey = _cacheKey;
+		}else{
+			if ([cell respondsToSelector:@selector(MDKModelHash)]) {
+				cacheKey = cell.MDKModelHash;
+			}
+		}
+		if (cacheKey.length) {
+			cacheKey = [NSString stringWithFormat:@"%@-%@-%@",cellClass,@(_table.frame.size.width),cacheKey];
 			if (!_cellHeightCacheDic[cellClass]) {//try to get cache from RAM
 				_cellHeightCacheDic[cellClass] = MDKAutoLayoutHeight_cellHeightCacheDic[cellClass];
 				if (!_cellHeightCacheDic[cellClass]) {//try to get cache from Disk
@@ -104,6 +110,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 				return height.doubleValue;
 			}
 		}
+
 
 		CGRect cellFrame = (CGRect){{0, 0}, _table.bounds.size.width, _table.bounds.size.height};
 

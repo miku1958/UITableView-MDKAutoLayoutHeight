@@ -39,7 +39,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath handle:^CGFloat(__kindof UITableViewCell *cell, CGFloat height) {
+	return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath cacheKey:@(indexPath.row).description handle:^CGFloat(__kindof UITableViewCell *cell, CGFloat height) {
 		return height + 20;
 	}];
 }

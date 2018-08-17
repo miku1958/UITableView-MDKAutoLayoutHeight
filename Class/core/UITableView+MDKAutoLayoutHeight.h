@@ -21,7 +21,7 @@
 +(void)registerHeight:(Class)cellClass _decisionView:(NSString *)decisionView;
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath  handle:(CGFloat (^)(__kindof UITableViewCell *cell,CGFloat height))handleHeightBlock;
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)key  handle:(CGFloat (^)(__kindof UITableViewCell *cell,CGFloat height))handleHeightBlock;
 @end
 
 @interface UITableView (_MDKAutoLayoutHeight)
