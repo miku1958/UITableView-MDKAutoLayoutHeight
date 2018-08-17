@@ -168,16 +168,11 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		}
 	}
 
-	if (decisionVIew.length) {
-		UIView *view = [cell valueForKey:decisionVIew];
-		height = CGRectGetMaxY(view.frame) + cell.contentView.frame.origin.y;
-	}
+	height = [self getHeightFromCell:cell decisionVIew:decisionVIew];
 
-	if (height<1) {
-		height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + cell.contentView.frame.origin.y;
-	}
-	if (height<1) {
-		height = [cell intrinsicContentSize].height;
+	if (height<1 && [_table.delegate respondsToSelector:@selector(tableView:willDisplayCell:forRowAtIndexPath:)]) {
+		[_table.delegate tableView:_table willDisplayCell:cell forRowAtIndexPath:indexPath];
+		height = [self getHeightFromCell:cell decisionVIew:decisionVIew];
 	}
 
 	if (_table.separatorStyle != UITableViewCellSeparatorStyleNone) {
@@ -202,6 +197,22 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	[cell prepareForReuse];
 	return height;
 
+}
+
+- (CGFloat)getHeightFromCell:(UITableViewCell *)cell decisionVIew:(NSString *)decisionVIew{
+	CGFloat height = 0;
+	if (decisionVIew.length) {
+		UIView *view = [cell valueForKey:decisionVIew];
+		height = CGRectGetMaxY(view.frame) + cell.contentView.frame.origin.y;
+	}
+
+	if (height<1) {
+		height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + cell.contentView.frame.origin.y;
+	}
+	if (height<1) {
+		height = [cell intrinsicContentSize].height;
+	}
+	return height;
 }
 - (void)removeAllCacheWithDisk:(BOOL)withDisk{
 	[_cellHeightCacheDic removeAllObjects];
