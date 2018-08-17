@@ -51,7 +51,7 @@ Features
 If you need to handle the result height,you can use this
 
 	-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	   return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath handle:^CGFloat(__kindof UITableViewCell *cell, CGFloat height) {
+	   return [tableView.autoLayoutHeight heightForRowAtIndexPath:indexPath cacheKey:acacheKey handle:^CGFloat(__kindof UITableViewCell *cell, CGFloat height) {
 		   return height + 20;
 	   }];
 	}
@@ -79,6 +79,8 @@ If you implement this, it also apply to those cell that use frame to config cell
 #
 
 ## cache cell height in RAM 
+
+### if the acacheKey of heightForRowAtIndexPath is nil or @“” , you may should follow below code to return a cachekey
 
 Introduce `<MDKTableviewCellCacheHeightDelegate>` in your cell ,implement `-MDKModelHash method` ,return something is unique like the dataModel's ID ,like:
 
