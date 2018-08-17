@@ -80,7 +80,7 @@ If you implement this, it also apply to those cell that use frame to config cell
 
 ## cache cell height in RAM 
 
-###if the acacheKey of heightForRowAtIndexPath is nil or @“” , you may should follow below code to return a cachekey
+### if the acacheKey of heightForRowAtIndexPath is nil or @“” , you may should follow below code to return a cachekey
 
 Introduce `<MDKTableviewCellCacheHeightDelegate>` in your cell ,implement `-MDKModelHash method` ,return something is unique like the dataModel's ID ,like:
 
