@@ -17,6 +17,50 @@ static NSMutableDictionary<NSString *,NSString *> *MDKAutoLayoutHeight_decisionV
 static MDKHeightCacheDic *MDKAutoLayoutHeight_cellHeightCacheDic;
 static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 
+@implementation UITableView (_MDKAutoLayoutHeight)
+-(MDKAutoLayoutHeight *)autoLayoutHeight{
+	@synchronized(self){
+		MDKAutoLayoutHeight *autoHeight = objc_getAssociatedObject(self, @selector(autoLayoutHeight));
+		if (!autoHeight) {
+			autoHeight = [MDKAutoLayoutHeight new];
+			autoHeight.table = self;
+
+			NSString *objectName = @"autoLayoutHeight";
+			[self willChangeValueForKey:objectName];
+
+			objc_setAssociatedObject(self, @selector(autoLayoutHeight),
+									 autoHeight, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+			[self didChangeValueForKey:objectName];
+		}
+
+		return autoHeight;
+	}
+}
+-(NSString *)existingViewControllerClassName{
+	NSString *existing = objc_getAssociatedObject(self, @selector(existingViewControllerClassName));
+	if (!existing) {
+		UIViewController *existingCtr = self.nextResponder;
+		while (existingCtr) {
+			if ([existingCtr isKindOfClass:UIViewController.class]) {
+				existing = NSStringFromClass(existingCtr.class);
+				break;
+			}
+			existingCtr = existingCtr.nextResponder;
+		}
+
+		NSString *objectName = @"existingViewControllerClassName";
+		[self willChangeValueForKey:objectName];
+
+		objc_setAssociatedObject(self, @selector(existingViewControllerClassName),
+								 existing, OBJC_ASSOCIATION_COPY);
+
+		[self didChangeValueForKey:objectName];
+	}
+
+	return existing;
+}
+@end
 
 @implementation MDKAutoLayoutHeight
 +(void)load{//ensure these object had initialize, so I put them in +load but not +initialize
@@ -96,7 +140,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 			}
 		}
 		if (cacheKey.length) {
-			cacheKey = [NSString stringWithFormat:@"%@-%@-%@",cellClass,@(_table.frame.size.width),cacheKey];
+			cacheKey = [NSString stringWithFormat:@"%@-%@-%@-%@",_table.existingViewControllerClassName,@(_table.frame.size.width), cellClass ,cacheKey];
 			if (!_cellHeightCacheDic[cellClass]) {//try to get cache from RAM
 				_cellHeightCacheDic[cellClass] = MDKAutoLayoutHeight_cellHeightCacheDic[cellClass];
 				if (!_cellHeightCacheDic[cellClass]) {//try to get cache from Disk
@@ -168,11 +212,16 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		}
 	}
 
-	height = [self getHeightFromCell:cell decisionVIew:decisionVIew];
+	if (decisionVIew.length) {
+		UIView *view = [cell valueForKey:decisionVIew];
+		height = CGRectGetMaxY(view.frame) + cell.contentView.frame.origin.y;
+	}
 
-	if (height<1 && [_table.delegate respondsToSelector:@selector(tableView:willDisplayCell:forRowAtIndexPath:)]) {
-		[_table.delegate tableView:_table willDisplayCell:cell forRowAtIndexPath:indexPath];
-		height = [self getHeightFromCell:cell decisionVIew:decisionVIew];
+	if (height<1) {
+		height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + cell.contentView.frame.origin.y;
+	}
+	if (height<1) {
+		height = [cell intrinsicContentSize].height;
 	}
 
 	if (_table.separatorStyle != UITableViewCellSeparatorStyleNone) {
@@ -197,22 +246,6 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	[cell prepareForReuse];
 	return height;
 
-}
-
-- (CGFloat)getHeightFromCell:(UITableViewCell *)cell decisionVIew:(NSString *)decisionVIew{
-	CGFloat height = 0;
-	if (decisionVIew.length) {
-		UIView *view = [cell valueForKey:decisionVIew];
-		height = CGRectGetMaxY(view.frame) + cell.contentView.frame.origin.y;
-	}
-
-	if (height<1) {
-		height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + cell.contentView.frame.origin.y;
-	}
-	if (height<1) {
-		height = [cell intrinsicContentSize].height;
-	}
-	return height;
 }
 - (void)removeAllCacheWithDisk:(BOOL)withDisk{
 	[_cellHeightCacheDic removeAllObjects];
@@ -245,25 +278,4 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 
 
 
-@implementation UITableView (_MDKAutoLayoutHeight)
--(MDKAutoLayoutHeight *)autoLayoutHeight{
-	@synchronized(self){
-		MDKAutoLayoutHeight *autoHeight = objc_getAssociatedObject(self, @selector(autoLayoutHeight));
-		if (!autoHeight) {
-			autoHeight = [MDKAutoLayoutHeight new];
-			autoHeight.table = self;
 
-			NSString *objectName = @"autoLayoutHeight";
-			[self willChangeValueForKey:objectName];
-
-			objc_setAssociatedObject(self, @selector(autoLayoutHeight),
-									 autoHeight, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
-			[self didChangeValueForKey:objectName];
-		}
-
-		return autoHeight;
-	}
-}
-
-@end
