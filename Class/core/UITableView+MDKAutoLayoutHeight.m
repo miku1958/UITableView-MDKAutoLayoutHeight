@@ -110,7 +110,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 }
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)_cacheKey{
-	if (_table.MDKAutoLayoutFastHeightCache[_cacheKey].count == 1) {
+	if (_cacheKey.length && _table.MDKAutoLayoutFastHeightCache[_cacheKey].count == 1) {
 		return _table.MDKAutoLayoutFastHeightCache[_cacheKey].anyObject.doubleValue;
 	}
 	UITableViewCell<MDKTableviewCellCacheHeightDelegate> *cell = (id)[_table.dataSource tableView:_table cellForRowAtIndexPath:indexPath];
@@ -261,10 +261,12 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		}
 		_cellHeightCacheDic[cellClass][cacheKey] = heightObj;
 
-		if (!_table.MDKAutoLayoutFastHeightCache[_cacheKey]) {
-			_table.MDKAutoLayoutFastHeightCache[_cacheKey] = [NSMutableSet set];
+		if (_cacheKey.length) {
+			if (!_table.MDKAutoLayoutFastHeightCache[_cacheKey]) {
+				_table.MDKAutoLayoutFastHeightCache[_cacheKey] = [NSMutableSet set];
+			}
+			[_table.MDKAutoLayoutFastHeightCache[_cacheKey] addObject:heightObj];
 		}
-		[_table.MDKAutoLayoutFastHeightCache[_cacheKey] addObject:heightObj];
 	}
 
 	if (cellContetntWidthCons) {
