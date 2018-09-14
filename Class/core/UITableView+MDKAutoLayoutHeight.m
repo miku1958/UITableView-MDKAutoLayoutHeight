@@ -90,10 +90,10 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 }
 
 -(CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	return [self heightForRowAtIndexPath:indexPath cacheKey:nil handle:nil];
+	return [self heightForRowAtIndexPath:indexPath cacheKey:nil];
 }
 
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)_cacheKey  handle:(CGFloat (^)(__kindof UITableViewCell *cell,CGFloat height))handleHeightBlock{
+- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)_cacheKey{
 	UITableViewCell<MDKTableviewCellCacheHeightDelegate> *cell = (id)[_table.dataSource tableView:_table cellForRowAtIndexPath:indexPath];
 
 	NSString *cellClass = NSStringFromClass(cell.class);
@@ -230,9 +230,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	if (height<1) {
 		
 	}
-	if (handleHeightBlock) {
-		height = handleHeightBlock(cell,height);
-	}
+
 	if (cacheKey.length) {
 		if (!_cellHeightCacheDic[cellClass]) {
 			_cellHeightCacheDic[cellClass] = @{}.mutableCopy;
