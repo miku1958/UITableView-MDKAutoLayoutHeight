@@ -20,7 +20,6 @@
 @interface MDKAutoLayoutHeight: NSObject
 +(void)registerHeight:(Class)cellClass _decisionView:(NSString *)decisionView;
 
-- (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)key;
 @end
 

@@ -105,9 +105,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	MDKAutoLayoutHeight_decisionViewsDic[NSStringFromClass(cellClass)] = decisionView;
 }
 
--(CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-	return [self heightForRowAtIndexPath:indexPath cacheKey:nil];
-}
+
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)_cacheKey{
 	if (_cacheKey.length && _table.MDKAutoLayoutFastHeightCache[_cacheKey].count == 1) {
@@ -128,9 +126,10 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	CGFloat height = 0;
 
 	NSString *cacheKey;
-
 	if (cell) {
+#ifdef DEBUG
 		NSAssert(cell.reuseIdentifier, @"please use UITableViewCell reuse function");
+#endif
 		NSMutableDictionary<NSString *,NSMutableArray *> *_reusableTableCells = [_table valueForKey:@"_reusableTableCells"];
 		if (!_reusableTableCells[cell.reuseIdentifier]) {
 			_reusableTableCells[cell.reuseIdentifier] = @[cell].mutableCopy;
@@ -151,13 +150,10 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		if ([cell.class isEqual:UITableViewCell.class]) {
 			return [cell sizeThatFits:CGSizeMake(_table.frame.size.width, MAXFLOAT)].height;
 		}
-		if (_cacheKey.length) {
-			cacheKey = _cacheKey;
-		}else{
-			if ([cell respondsToSelector:@selector(MDKModelHash)]) {
-				cacheKey = cell.MDKModelHash;
-			}
-		}
+
+
+		cacheKey = _cacheKey;
+
 		if (cacheKey.length) {
 			cacheKey = [NSString stringWithFormat:@"%@-%@-%@-%@",_table.existingViewControllerClassName,@(_table.frame.size.width), cellClass ,cacheKey];
 			if (!_cellHeightCacheDic[cellClass]) {//try to get cache from RAM
@@ -180,7 +176,12 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 
 
 		CGRect cellFrame = (CGRect){{0, 0}, _table.bounds.size.width, _table.bounds.size.height};
-
+		if (cacheKey.length) {
+#ifdef DEBUG
+			NSAssert(cellFrame.size.width, @"if you want to use RAM cache , table need WIDTH>0");
+			NSAssert(cellFrame.size.height, @"if you want to use RAM cache , table may need height>0");
+#endif
+		}
 		cell.frame = cellFrame;
 
 		if (decisionVIew.length) {
@@ -250,9 +251,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	if (_table.separatorStyle != UITableViewCellSeparatorStyleNone) {
 		height += 1.0 / UIScreen.mainScreen.scale;
 	}
-	if (height<1) {
-		
-	}
+
 
 	if (cacheKey.length) {
 		id heightObj = @(height);
