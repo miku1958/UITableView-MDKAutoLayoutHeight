@@ -60,6 +60,22 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 
 	return existing;
 }
+- (NSMutableDictionary <NSString *, NSMutableSet<NSNumber *> *>*)MDKAutoLayoutFastHeightCache{
+	id cache = objc_getAssociatedObject(self, @selector(MDKAutoLayoutFastHeightCache));
+	if (!cache) {
+		cache = [NSMutableDictionary dictionary];
+
+		NSString *objectName = @"MDKAutoLayoutFastHeightCache";
+		[self willChangeValueForKey:objectName];
+
+		objc_setAssociatedObject(self, @selector(MDKAutoLayoutFastHeightCache),
+								 cache, OBJC_ASSOCIATION_RETAIN);
+
+		[self didChangeValueForKey:objectName];
+	}
+
+	return cache;
+}
 @end
 
 @implementation MDKAutoLayoutHeight
@@ -94,6 +110,9 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 }
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath cacheKey:(NSString *)_cacheKey{
+	if (_table.MDKAutoLayoutFastHeightCache[_cacheKey].count == 1) {
+		return _table.MDKAutoLayoutFastHeightCache[_cacheKey].anyObject.doubleValue;
+	}
 	UITableViewCell<MDKTableviewCellCacheHeightDelegate> *cell = (id)[_table.dataSource tableView:_table cellForRowAtIndexPath:indexPath];
 
 	NSString *cellClass = NSStringFromClass(cell.class);
@@ -151,6 +170,10 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 			}
 			NSNumber *height = _cellHeightCacheDic[cellClass][cacheKey];
 			if (height) {
+				if (!_table.MDKAutoLayoutFastHeightCache[_cacheKey]) {
+					_table.MDKAutoLayoutFastHeightCache[_cacheKey] = [NSMutableSet set];
+				}
+				[_table.MDKAutoLayoutFastHeightCache[_cacheKey] addObject:height];
 				return height.doubleValue;
 			}
 		}
@@ -232,10 +255,16 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 	}
 
 	if (cacheKey.length) {
+		id heightObj = @(height);
 		if (!_cellHeightCacheDic[cellClass]) {
 			_cellHeightCacheDic[cellClass] = @{}.mutableCopy;
 		}
-		_cellHeightCacheDic[cellClass][cacheKey] = @(height);
+		_cellHeightCacheDic[cellClass][cacheKey] = heightObj;
+
+		if (!_table.MDKAutoLayoutFastHeightCache[_cacheKey]) {
+			_table.MDKAutoLayoutFastHeightCache[_cacheKey] = [NSMutableSet set];
+		}
+		[_table.MDKAutoLayoutFastHeightCache[_cacheKey] addObject:heightObj];
 	}
 
 	if (cellContetntWidthCons) {
