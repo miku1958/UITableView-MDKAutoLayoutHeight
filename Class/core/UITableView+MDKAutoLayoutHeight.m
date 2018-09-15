@@ -179,7 +179,7 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 		if (cacheKey.length) {
 #ifdef DEBUG
 			NSAssert(cellFrame.size.width, @"if you want to use RAM cache , table need WIDTH>0");
-			NSAssert(cellFrame.size.height, @"if you want to use RAM cache , table may need height>0");
+			NSLog(@"%@",@"if you want to use RAM cache , table may need height>0");
 #endif
 		}
 		cell.frame = cellFrame;
