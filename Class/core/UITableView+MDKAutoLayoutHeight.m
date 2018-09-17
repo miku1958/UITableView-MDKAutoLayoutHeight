@@ -176,10 +176,20 @@ static NSLock *MDKAutoLayoutHeightMemoryWarningLock;
 
 
 		CGRect cellFrame = (CGRect){{0, 0}, _table.bounds.size.width, _table.bounds.size.height};
-		if (cacheKey.length) {
+		if (cellFrame.size.width == 0) {
+			cellFrame.size.width = UIScreen.mainScreen.bounds.size.width;
 #ifdef DEBUG
-			NSAssert(cellFrame.size.width, @"if you want to use RAM cache , table need WIDTH>0");
-			NSLog(@"%@",@"if you want to use RAM cache , table may need height>0");
+			NSLog(@"%@ , %@",
+				  @"if you want to use RAM cache , table may need width>0",
+				  @"auto fix width to UIScreen.mainScreen.bounds.size.width");
+#endif
+		}
+		if (cellFrame.size.height == 0) {
+			cellFrame.size.height = UIScreen.mainScreen.bounds.size.height;
+#ifdef DEBUG
+			NSLog(@"%@ , %@",
+				  @"if you want to use RAM cache , table may need height>0",
+				  @"auto fix height to UIScreen.mainScreen.bounds.size.height");
 #endif
 		}
 		cell.frame = cellFrame;
